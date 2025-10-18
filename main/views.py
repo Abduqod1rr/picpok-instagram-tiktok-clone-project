@@ -1,7 +1,7 @@
-from django.shortcuts import render, HttpResponse
+from django.shortcuts import render, HttpResponse 
 from django.views.generic import CreateView , ListView ,UpdateView ,DeleteView    
     # Create your views here.
 
 def hello1func(request):
-    return render(HttpResponse , "hello it's the picpok project i'm making docs and readme")
+    return HttpResponse("hello it's the picpok project i'm making docs and readme")
 
