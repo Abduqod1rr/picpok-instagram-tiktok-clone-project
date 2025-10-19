@@ -10,3 +10,9 @@ class Poc(models.Model):
 
     def __str__(self):
         return self.title
+    
+class comment(models.Model):
+    poc=models.ForeignKey(Poc, on_delete=models.CASCADE)
+    text=models.TextField()
+    coment_owner=models.ForeignKey(User, on_delete=models.CASCADE)
+    comented_at=models.DateTimeField(auto_now_add=True)
