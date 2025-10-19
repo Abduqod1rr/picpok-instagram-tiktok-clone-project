@@ -16,3 +16,6 @@ class comment(models.Model):
     text=models.TextField()
     coment_owner=models.ForeignKey(User, on_delete=models.CASCADE)
     comented_at=models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.text
