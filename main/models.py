@@ -6,3 +6,7 @@ class Poc(models.Model):
     content=models.FileField(upload_to='/picpokcontent')
     owner=models.ForeignKey(User,on_delete=models.CASCADE)
     created_at=models.DateTimeField(auto_now_add=True)
+    like=models.ManyToManyField(User,related_name='liked_poc')
+
+    def __str__(self):
+        return self.title
