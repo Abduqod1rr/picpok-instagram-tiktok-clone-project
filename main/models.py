@@ -19,3 +19,9 @@ class comment(models.Model):
 
     def __str__(self):
         return self.text
+    
+#profile model
+class Profile(models.Model):
+    user=models.ForeignKey(User, on_delete=models.CASCADE)
+    bio=models.CharField(max_length=50)
+    picture=models.ImageField(default='default.png',upload_to='profile_pictures')
