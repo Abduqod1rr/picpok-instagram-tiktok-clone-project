@@ -1,4 +1,6 @@
 from django.contrib import admin
-from .models import Poc , comment ,Profile
+from .models import Poc , Comment ,Profile
 # Register your models here.
-admin.site.register(Poc,comment,Profile)
+admin.site.register(Poc)
+admin.site.register(Comment)
+admin.site.register(Profile)

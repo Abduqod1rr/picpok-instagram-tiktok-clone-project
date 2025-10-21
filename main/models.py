@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 
 
 class Poc(models.Model):
-    title=models.CharField(max_length=20)
+    title=models.CharField(max_length=20,default='no title')
     content=models.FileField(upload_to='picpokcontent')
     owner=models.ForeignKey(User,on_delete=models.CASCADE)
     created_at=models.DateTimeField(auto_now_add=True)
@@ -25,7 +25,7 @@ class Comment(models.Model):
 
 class Profile(models.Model):
     user=models.ForeignKey(User, on_delete=models.CASCADE)
-    bio=models.CharField(max_length=50)
+    bio=models.CharField(max_length=50,default='nothing')
     picture=models.ImageField(default='default.png',upload_to='profile_pictures')
 
     def __str__(self):
