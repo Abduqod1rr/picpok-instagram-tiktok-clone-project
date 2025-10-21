@@ -1,10 +1,10 @@
-{% load static %}
+{% load static from static%}
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <title>Sign Up | PicPok</title>
-  <link rel="stylesheet" href="{% static 'css/register.css' %}">
+  <link rel="stylesheet" href="{% static 'register.css' %}">
 </head>
 <body>
   <div class="register-container">
@@ -19,8 +19,8 @@
 
     <p class="login-link">
       Already have an account?
-      <a href="{% url 'login' %}">Log in</a>
-    </p>
+
+  </p>
   </div>
 </body>
 </html>
