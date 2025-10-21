@@ -1,0 +1,26 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Sign Up | PicPok</title>
+  <link rel="stylesheet" href="{% static 'css/register.css' %}">
+</head>
+<body>
+  <div class="register-container">
+    <h1 class="logo">📸 PicPok</h1>
+    <h2>Create your account</h2>
+
+    <form method="POST" class="register-form">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit">Register</button>
+    </form>
+
+    <p class="login-link">
+      Already have an account?
+      <a href="{% url 'login' %}">Log in</a>
+    </p>
+  </div>
+</body>
+</html>

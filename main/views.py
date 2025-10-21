@@ -1,9 +1,8 @@
 from django.shortcuts import render, HttpResponse 
 from django.views.generic import CreateView , ListView ,UpdateView ,DeleteView    
-    
+from django.contrib.auth.forms import UserCreationForm
 
-def hello1func(request):
-
-    return HttpResponse("hello it's the picpok project i'm making docs and readme")
-
-
+class UserRegister(UserCreationForm,CreateView):
+        fields=['username','password']
+        template_name='register.html'
+        
