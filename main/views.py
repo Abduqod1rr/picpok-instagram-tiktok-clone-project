@@ -22,3 +22,8 @@ class CreateProfile(CreateView):
         fields=['bio','picture']
         template_name='createprofile.html'
         success_url=reverse_lazy('login')
+
+        def form_valid(self, form):
+            form.instance.user=self.request.user
+            return super().form_valid(form)
+        
