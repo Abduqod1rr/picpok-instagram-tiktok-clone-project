@@ -1,0 +1,90 @@
+body {
+  font-family: 'Poppins', sans-serif;
+  background: radial-gradient(circle at top, #0f0f0f, #1c1c1c);
+  color: #f2f2f2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
+.profile-container {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  padding: 2.5rem 3rem;
+  border-radius: 20px;
+  box-shadow: 0 0 40px rgba(255, 255, 255, 0.05);
+  text-align: center;
+  width: 370px;
+  animation: fadeIn 0.6s ease;
+}
+
+.logo {
+  font-size: 2rem;
+  color: #ff3b3b;
+  margin-bottom: 10px;
+  text-transform: lowercase;
+  letter-spacing: 1px;
+}
+
+h2 {
+  margin-bottom: 1.5rem;
+  font-weight: 500;
+  color: #fff;
+}
+
+.profile-form p {
+  text-align: left;
+  margin-bottom: 1rem;
+}
+
+.profile-form input,
+.profile-form textarea {
+  width: 100%;
+  padding: 0.7rem;
+  border: none;
+  border-radius: 10px;
+  outline: none;
+  background: #2b2b2b;
+  color: #fff;
+  transition: 0.2s;
+}
+
+.profile-form input:focus,
+.profile-form textarea:focus {
+  background: #383838;
+  box-shadow: 0 0 0 2px #ff3b3b;
+}
+
+button {
+  width: 100%;
+  padding: 0.8rem;
+  background: #ff3b3b;
+  border: none;
+  border-radius: 12px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+button:hover {
+  background: #ff5050;
+  transform: translateY(-1px);
+}
+
+.back-link {
+  margin-top: 1rem;
+  color: #aaa;
+}
+
+.back-link a {
+  color: #ff3b3b;
+  text-decoration: none;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
