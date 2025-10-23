@@ -46,9 +46,8 @@ class AddPoc(CreateView):
         return super().form_valid(form)
        
 class MyPocs(ListView):
-      model=Poc
+      model=Poc 
  #i'll add template
- 
+
       def get_queryset(self):
           return Poc.objects.filter(owner=self.request.user)
-      
