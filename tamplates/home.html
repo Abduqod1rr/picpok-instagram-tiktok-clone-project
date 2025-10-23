@@ -1,0 +1,32 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Picpok Home</title>
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+</head>
+<body>
+  <div class="home-container">
+      <h1 class="logo">picpok</h1>
+      <h2 class="title">Explore Posts</h2>
+
+      {% if object_list %}
+        <div class="posts-grid">
+          {% for poc in object_list %}
+            <div class="post-card">
+                <img src="{{ poc.image.url }}" alt="Post Image">
+                <div class="content">
+                    <p class="caption">{{ poc.caption }}</p>
+                    <p class="author">@{{ poc.user.username }}</p>
+                </div>
+            </div>
+          {% endfor %}
+        </div>
+      {% else %}
+        <p class="no-posts">No posts yet. Be the first to share something 🔥</p>
+      {% endif %}
+  </div>
+</body>
+</html>

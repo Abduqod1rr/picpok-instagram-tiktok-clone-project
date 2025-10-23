@@ -32,9 +32,6 @@ class CreateProfile(CreateView):
         
 class Home(ListView):
        model=Poc
+       template_name='home.html'
 
-
-       def form_valid(self, form):
-           form.instance.user=self.request.user
-           return super().form_valid(form)
-       
+      
