@@ -1,5 +1,5 @@
 from django.shortcuts import render, HttpResponse 
-from django.views.generic import CreateView , ListView ,UpdateView ,DeleteView    
+from django.views.generic import CreateView , ListView ,UpdateView ,DeleteView    , DetailView
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from . import forms
@@ -17,6 +17,9 @@ class UserLogin(LoginView):
         template_name='login.html'
         success_url=reverse_lazy('register')
 
+class userlogout(LogoutView):
+       success_url=reverse_lazy('login')
+
 class CreateProfile(CreateView):
         model=Profile
         fields=['bio','picture']
@@ -27,3 +30,11 @@ class CreateProfile(CreateView):
             form.instance.user=self.request.user
             return super().form_valid(form)
         
+class Home(ListView):
+       model=Poc
+
+
+       def form_valid(self, form):
+           form.instance.user=self.request.user
+           return super().form_valid(form)
+       
