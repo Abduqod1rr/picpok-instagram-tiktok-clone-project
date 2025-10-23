@@ -16,10 +16,10 @@
         <div class="posts-grid">
           {% for poc in object_list %}
             <div class="post-card">
-                <img src="{{ poc.image.url }}" alt="Post Image">
+                <img src="{{ poc.content.url }}" alt="Post Image">
                 <div class="content">
-                    <p class="caption">{{ poc.caption }}</p>
-                    <p class="author">@{{ poc.user.username }}</p>
+                    <p class="caption">{{ poc.title }}</p>
+                    <p class="author">@{{ poc.owner.username }}</p>
                 </div>
             </div>
           {% endfor %}

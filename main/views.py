@@ -39,9 +39,8 @@ class AddPoc(CreateView):
        model=Poc
        fields=['title','content']
        template_name='addpoc.html'
-       success_url='home/'
+       success_url=reverse_lazy('home')
 
        def form_valid(self, form):
-           form.instance.user=self.request.user
-           return super().form_valid(form)
-       
+        form.instance.owner = self.request.user
+        return super().form_valid(form)

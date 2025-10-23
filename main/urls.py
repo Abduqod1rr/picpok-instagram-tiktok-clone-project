@@ -10,5 +10,6 @@ urlpatterns = [
     path("login/", views.UserLogin.as_view(), name="login"),
     path("logout/", views.userlogout.as_view(), name="logout"),
     path("create-profile/", views.CreateProfile.as_view(), name="createprofile"),
-    path("home/", views.Home.as_view(), name="home")
+    path("home/", views.Home.as_view(), name="home"),
+    path("addpoc/", views.AddPoc.as_view(), name="addpoc")
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
