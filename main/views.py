@@ -39,6 +39,7 @@ class AddPoc(CreateView):
        model=Poc
        fields=['title','content']
        template_name='addpoc.html'
+       success_url='home/'
 
        def form_valid(self, form):
            form.instance.user=self.request.user
