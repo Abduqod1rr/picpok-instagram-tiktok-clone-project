@@ -35,3 +35,12 @@ class Home(ListView):
        template_name='home.html'
 
       
+class AddPoc(CreateView):
+       model=Poc
+       fields=['title','content']
+       template_name='addpoc.html'
+
+       def form_valid(self, form):
+           form.instance.user=self.request.user
+           return super().form_valid(form)
+       

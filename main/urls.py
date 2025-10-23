@@ -1,5 +1,8 @@
 from django.urls import path
 from . import views
+from django.conf import settings
+from django.conf.urls.static import static
+
 
 urlpatterns = [
      #paths
@@ -8,4 +11,4 @@ urlpatterns = [
     path("logout/", views.userlogout.as_view(), name="logout"),
     path("create-profile/", views.CreateProfile.as_view(), name="createprofile"),
     path("home/", views.Home.as_view(), name="home")
-]
+]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
