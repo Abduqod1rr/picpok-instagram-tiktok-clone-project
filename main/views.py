@@ -47,7 +47,17 @@ class AddPoc(CreateView):
        
 class MyPocs(ListView):
       model=Poc 
-      template_name='home.html'
+      template_name='crud.html'
+      context_object_name='pocs'
 
       def get_queryset(self):
           return Poc.objects.filter(owner=self.request.user)
+
+class DeletePoc(DeleteView):
+      model=Poc
+      template_name='crud.html'
+
+      def test_func(self):
+            poc=self.get_object()
+            return poc.owner == self.request.user
+

@@ -13,4 +13,5 @@ urlpatterns = [
     path("home/", views.Home.as_view(), name="home"),
     path("addpoc/", views.AddPoc.as_view(), name="addpoc"),
     path("mypocs/", views.MyPocs.as_view(), name="mypocs")
+     #
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

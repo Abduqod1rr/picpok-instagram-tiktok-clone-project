@@ -1,0 +1,41 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Your POCs</title>
+  <link rel="stylesheet" href="{% static 'crud.css' %}">
+</head>
+<body>
+  <div class="dashboard-container">
+    <h1 class="logo">picpok</h1>
+
+    <!-- CREATE FORM -->
+    <form method="POST" enctype="multipart/form-data" class="create-form">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit">Post</button>
+    </form>
+
+    <!-- USER'S POSTS -->
+    <div class="poc-list">
+      {% for poc in pocs %}
+        <div class="poc-card">
+          <h3>{{ poc.title }}</h3>
+          {% if poc.content %}
+            <img src="{{ poc.content.url }}" alt="{{ poc.title }}">
+          {% endif %}
+              <p class="date">{{ poc.created_at|date:"M d, Y" }}</p>
+
+          <div class="actions">
+            <a href="{% url 'update_poc' poc.id %}" class="edit">✏️</a>
+            <a href="{% url 'delete_poc' poc.id %}" class="delete">🗑️</a>
+          </div>
+        </div>
+      {% empty %}
+        <p class="empty-text">You haven’t posted anything yet. Drop your first one ⚡</p>
+      {% endfor %}
+    </div>
+  </div>
+</body>
+</html>

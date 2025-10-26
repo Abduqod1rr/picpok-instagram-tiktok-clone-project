@@ -1,0 +1,83 @@
+body {
+  background: radial-gradient(circle at top, #0f0f0f, #1c1c1c);
+  font-family: 'Poppins', sans-serif;
+  color: #f2f2f2;
+  display: flex;
+  justify-content: center;
+  padding: 40px;
+}
+
+.dashboard-container {
+  width: 80%;
+  max-width: 800px;
+}
+
+.logo {
+  color: #ff3b3b;
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+.create-form {
+  background: rgba(255,255,255,0.05);
+  padding: 1rem 1.5rem;
+  border-radius: 15px;
+  margin-bottom: 2rem;
+  backdrop-filter: blur(8px);
+}
+
+.create-form input, .create-form textarea {
+  width: 100%;
+  padding: 0.8rem;
+  background: #2b2b2b;
+  border: none;
+  border-radius: 10px;
+  color: #fff;
+  margin-bottom: 1rem;
+}
+
+.create-form button {
+  width: 100%;
+  padding: 0.8rem;
+  background: #ff3b3b;
+  border: none;
+  border-radius: 12px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.poc-list {
+  display: grid;
+  gap: 20px;
+}
+
+.poc-card {
+  background: rgba(255,255,255,0.04);
+  padding: 1rem;
+  border-radius: 12px;
+  position: relative;
+}
+
+.poc-card img {
+  width: 100%;
+  border-radius: 10px;
+  margin-top: 10px;
+}
+
+.actions {
+  margin-top: 10px;
+  display: flex;
+  gap: 10px;
+}
+
+.actions a {
+  color: #ff3b3b;
+  text-decoration: none;
+}
+
+.empty-text {
+  text-align: center;
+  color: #999;
+  margin-top: 2rem;
+}
