@@ -1,7 +1,8 @@
-from django.shortcuts import render, HttpResponse 
+from django.shortcuts import render, HttpResponse ,redirect
 from django.views.generic import CreateView , ListView ,UpdateView ,DeleteView    , DetailView
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+from django.contrib import messages
 from . import forms
 from django.contrib.auth.views import LoginView , LogoutView
 from django.urls import reverse_lazy
@@ -15,7 +16,7 @@ class UserRegister(CreateView):
 
 class UserLogin(LoginView):
         template_name='login.html'
-        success_url=reverse_lazy('register')
+        success_url=reverse_lazy('createprofile')
 
 class userlogout(LogoutView):
        success_url=reverse_lazy('login')
@@ -26,9 +27,17 @@ class CreateProfile(CreateView):
         template_name='createprofile.html'
         success_url=reverse_lazy('login')
 
+        
+
         def form_valid(self, form):
-            form.instance.user=self.request.user
-            return super().form_valid(form)
+         existing_profile = Profile.objects.filter(user=self.request.user).first()
+         if existing_profile:
+             messages.warning(self.request, "You already have a profile.")
+             return redirect('myprofile')  # or wherever you want to send them
+
+         form.instance.user = self.request.user
+         return super().form_valid(form)
+
         
 class Home(ListView):
        model=Poc
@@ -71,3 +80,12 @@ class UpdatePoc(UpdateView):
       def test_func(self):
             poc=self.get_object()
             return poc.owner == self.request.user
+      
+class MyProfile(DetailView):
+      model=Profile
+      template_name='myprofile.html'
+      context_object_name='profile'
+
+      def get_object(self):
+       obj, created = Profile.objects.get_or_create(user=self.request.user)
+       return obj

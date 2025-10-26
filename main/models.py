@@ -26,7 +26,10 @@ class Comment(models.Model):
 class Profile(models.Model):
     user=models.ForeignKey(User, on_delete=models.CASCADE)
     bio=models.CharField(max_length=50,default='nothing')
-    picture=models.ImageField(default='default.png',upload_to='profile_pictures')
-
+    picture=models.ImageField(default='profile_pictures/default.png',upload_to='profile_pictures')
+ 
+    class Meta:
+        unique_together = ('user',)
+        
     def __str__(self):
         return self.user
