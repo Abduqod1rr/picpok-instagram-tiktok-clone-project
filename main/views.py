@@ -47,7 +47,7 @@ class AddPoc(CreateView):
        
 class MyPocs(ListView):
       model=Poc 
- #i'll add template
+      template_name='home.html'
 
       def get_queryset(self):
           return Poc.objects.filter(owner=self.request.user)
