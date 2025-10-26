@@ -61,3 +61,10 @@ class DeletePoc(DeleteView):
             poc=self.get_object()
             return poc.owner == self.request.user
 
+class UpdatePoc(UpdateView):
+      model=Poc
+      template_name='crud.html'
+
+      def test_func(self):
+            poc=self.get_object()
+            return poc.owner == self.request.user
