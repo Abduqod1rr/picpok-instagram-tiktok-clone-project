@@ -12,6 +12,8 @@ urlpatterns = [
     path("create-profile/", views.CreateProfile.as_view(), name="createprofile"),
     path("home/", views.Home.as_view(), name="home"),
     path("addpoc/", views.AddPoc.as_view(), name="addpoc"),
-    path("mypocs/", views.MyPocs.as_view(), name="mypocs")
+    path("mypocs/", views.MyPocs.as_view(), name="mypocs"),
+    path("delete_poc/<int:pk>", views.DeletePoc.as_view(), name="delete_poc"),
+    path("update_poc/<int:pk>",views.UpdatePoc.as_view(), name='update_poc')
      #
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

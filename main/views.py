@@ -56,6 +56,7 @@ class MyPocs(ListView):
 class DeletePoc(DeleteView):
       model=Poc
       template_name='crud.html'
+      success_url=reverse_lazy('mypocs')
 
       def test_func(self):
             poc=self.get_object()
@@ -64,6 +65,8 @@ class DeletePoc(DeleteView):
 class UpdatePoc(UpdateView):
       model=Poc
       template_name='crud.html'
+      success_url=reverse_lazy('mypocs')
+      fields=['title','content']
 
       def test_func(self):
             poc=self.get_object()
