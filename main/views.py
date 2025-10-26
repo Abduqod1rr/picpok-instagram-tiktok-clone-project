@@ -28,7 +28,6 @@ class CreateProfile(CreateView):
         success_url=reverse_lazy('login')
 
         
-
         def form_valid(self, form):
          existing_profile = Profile.objects.filter(user=self.request.user).first()
          if existing_profile:
