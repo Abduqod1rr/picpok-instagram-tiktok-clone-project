@@ -6,13 +6,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{{ user.username }} | PicPok Profile</title>
   <link rel="stylesheet" href="{% static 'myprofile.css' %}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
   <div class="profile-container">
+    
+    <!-- Header -->
     <div class="profile-header">
       <div class="avatar">
         {% if profile.picture %}
-          <img src="{{ profile.picture.url }}" alt="ProfilePicture">
+          <img src="{{ profile.picture.url }}" alt="Profile Picture">
         {% else %}
           <img src="{% static 'profile_pictures/default.png' %}" alt="Default Avatar">
         {% endif %}
@@ -21,16 +24,35 @@
       <p class="bio">{{ profile.bio|default:"No bio yet..." }}</p>
     </div>
 
+    <!-- Actions -->
     <div class="actions">
+      <a href="{% url 'edit_profile' %}" class="btn edit">Edit Profile</a>
       <a href="{% url 'logout' %}" class="btn logout">Logout</a>
     </div>
 
+    <!-- Gallery -->
     <div class="gallery">
       <h3>Your Posts</h3>
+
       <div class="poc-grid">
         {% for poc in user.poc_set.all %}
-          <div class="poc-item">
-            <img src="{{ poc.content.url }}" alt="{{ poc.title }}">
+          <div class="poc-card">
+            {% if poc.content %}
+              {% if ".mp4" in poc.content.url %}
+                <video src="{{ poc.content.url }}" controls muted loop></video>
+              {% elif ".jpg" in poc.content.url or ".jpeg" in poc.content.url or ".png" in poc.content.url or ".gif" in poc.content.url %}
+                <img src="{{ poc.content.url }}" alt="{{ poc.title }}">
+              {% else %}
+                <div class="file-box">
+                  <i class="fa fa-file"></i>
+                  <a href="{{ poc.content.url }}" download>
+                    {{ poc.title|truncatechars:20 }}
+                  </a>
+                </div>
+              {% endif %}
+            {% else %}
+              <p>No content available</p>
+            {% endif %}
             <p>{{ poc.title }}</p>
           </div>
         {% empty %}

@@ -41,6 +41,16 @@ class CreateProfile(CreateView):
 class Home(ListView):
        model=Poc
        template_name='home.html'
+       context_object_name='pocs'
+
+       def get_queryset(self):    
+            query = self.request.GET.get('q')
+            if query:
+                 return Poc.objects.filter(title__icontains=query)
+            return Poc.objects.all().order_by('-created_at')
+
+
+       
 
       
 class AddPoc(CreateView):
@@ -88,3 +98,18 @@ class MyProfile(DetailView):
       def get_object(self):
        obj, created = Profile.objects.get_or_create(user=self.request.user)
        return obj
+
+class EditProfile(UpdateView):
+     model=Profile
+     fields=['bio','picture']
+     template_name='edit_profile.html'
+     success_url=reverse_lazy('myprifile')
+
+     def test_func(self):
+            profile=self.get_object()
+            return profile.owner == self.request.user 
+
+     def get_object(self):
+        # Automatically get the current user's profile
+        obj, created = Profile.objects.get_or_create(user=self.request.user)
+        return obj
