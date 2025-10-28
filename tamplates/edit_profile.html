@@ -7,6 +7,10 @@
   <link rel="stylesheet" href="{% static 'edit_profile.css' %}">
 </head>
 <body>
+  <a href="{% url 'home' %}" class="home-btn">
+  <i class="fa fa-house"></i> Home
+</a>
+
   <div class="profile-edit-container">
     <h2>Edit Your Profile</h2>
     <form method="post" enctype="multipart/form-data" class="profile-edit-form">
