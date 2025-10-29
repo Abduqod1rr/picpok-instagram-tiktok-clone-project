@@ -78,6 +78,47 @@
     }
     .caption { font-size: 1.4rem; font-weight: 600; margin: 0; }
     .author { font-size: 1rem; opacity: 0.8; margin: 0; }
+
+    /* ==== LIKE BUTTON ==== */
+    .like-btn {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: rgba(255, 55, 95, 0.85);
+      border: none;
+      border-radius: 50%;
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 3;
+      transition: 0.3s ease;
+    }
+    .like-btn:hover {
+      transform: scale(1.1);
+      background: #ff375f;
+    }
+    .like-btn {
+  position: absolute; /* 🔥 bu muhim */
+  top: 20px;
+  right: 25px;
+  background: rgba(0,0,0,0.6);
+  color: #fff;
+  border: none;
+  border-radius: 20px;
+  padding: 6px 12px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.2s ease;
+  z-index: 3; /* 🔥 rasm/video ustida tursin */
+}
+
+.like-btn:hover {
+  background: #ff375f;
+}
+
   </style>
 </head>
 <body>
@@ -101,14 +142,24 @@
 
   {% for poc in pocs %}
   <div class="post-card">
-    <img src="{{ poc.content.url }}" alt="{{ poc.title }}">
+    {% if ".mp4" in poc.content.url %}
+      <video src="{{ poc.content.url }}" autoplay muted  playsinline></video>
+    {% else %}
+      <img src="{{ poc.content.url }}" alt="{{ poc.title }}">
+    {% endif %}
+
+    <form action="{% url 'toggle_like' poc.id %}" method="post">
+      {% csrf_token %}
+      <button type="submit" class="like-btn">
+        {{ poc.likes.count }}
+      </button>
+    </form>
+
     <div class="overlay">
       <p class="caption">{{ poc.title }}</p>
       <p class="author">@{{ poc.owner }}</p>
     </div>
   </div>
-  {% empty %}
-  <p style="text-align:center;margin-top:100px;">No posts found 🔍</p>
-  {% endfor %}
+{% endfor %}
 </body>
 </html>

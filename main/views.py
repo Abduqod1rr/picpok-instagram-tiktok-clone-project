@@ -1,4 +1,4 @@
-from django.shortcuts import render, HttpResponse ,redirect
+from django.shortcuts import render, HttpResponse ,redirect , get_object_or_404
 from django.views.generic import CreateView , ListView ,UpdateView ,DeleteView    , DetailView
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
@@ -51,7 +51,17 @@ class Home(ListView):
 
 
        
+       
+def toggle_like(request, pk):
+        poc = get_object_or_404(Poc, pk=pk)
 
+        if request.user in poc.like.all():
+              poc.like.remove(request.user)  # Unlike
+        else:
+              poc.like.add(request.user)     # Like
+
+        return redirect('home')
+       
       
 class AddPoc(CreateView):
        model=Poc
