@@ -63,7 +63,7 @@ class Home(LoginRequiredMixin,ListView):
 #
 #       return redirect('home')
 
-def toggle_like(request,pk):
+def toggle_like(request, pk):
      poc = get_object_or_404(Poc,pk=pk)
 
      if request.user in poc.like.all():
@@ -137,12 +137,14 @@ class EditProfile(LoginRequiredMixin,UpdateView):
 class CommentPoc(LoginRequiredMixin,CreateView):
      model = Comment
      fields=['text']
-
+     
      success_url = reverse_lazy('home')
 
      def form_valid(self, form):
          poc = get_object_or_404(Poc,pk=self.kwargs['pk'])
          form.instance.poc = poc
-         form.instance.comment_owner = self.request.user
+
+         form.instance.coment_owner = self.request.user
+
          return super().form_valid(form)
      

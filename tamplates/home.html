@@ -80,19 +80,39 @@
     }
     .like-btn:hover { background: #ff375f; }
 
-    /* Comments */
-    .comment-section { display: none; background: rgba(0,0,0,0.6); padding: 15px; margin: 0 25px 30px; border-radius: 15px; }
+    /* ==== COMMENTS ==== */
+    .comment-section {
+      display: none;
+      background: rgba(0,0,0,0.7);
+      padding: 12px 18px;
+      border-radius: 12px;
+      margin: 10px 25px 30px;
+      backdrop-filter: blur(5px);
+    }
     .comment { font-size: 0.95rem; margin: 8px 0; }
     .comment strong { color: #ff375f; }
+
     .comment-form textarea {
-      width: 100%; padding: 8px; border-radius: 10px;
-      border: none; background: #222; color: white;
+      width: 100%;
+      padding: 8px;
+      border-radius: 10px;
+      border: none;
+      background: #222;
+      color: white;
+      resize: none;
     }
     .comment-form button {
-      margin-top: 8px; padding: 6px 12px; border: none; border-radius: 10px;
-      background: #ff375f; color: white; cursor: pointer; font-weight: 600;
+      margin-top: 8px;
+      padding: 6px 12px;
+      border: none;
+      border-radius: 10px;
+      background: #ff375f;
+      color: white;
+      cursor: pointer;
+      font-weight: 600;
     }
     .comment-form button:hover { background: #ff5775; }
+
     .show-comments-btn {
       position: relative;
       z-index: 3;
@@ -107,6 +127,7 @@
       transition: 0.2s ease;
     }
     .show-comments-btn:hover { background: #ff375f; }
+
   </style>
 </head>
 <body>
@@ -129,10 +150,12 @@
 
   {% for poc in pocs %}
   <div class="post-card">
-    {% if ".mp4" in poc.content.url %}
-      <video src="{{ poc.content.url }}" autoplay muted playsinline loop></video>
-    {% else %}
-      <img src="{{ poc.content.url }}" alt="{{ poc.title }}">
+    {% if poc.content %}
+      {% if ".mp4" in poc.content.url|lower %}
+        <video src="{{ poc.content.url }}" autoplay muted playsinline loop></video>
+      {% else %}
+        <img src="{{ poc.content.url }}" alt="{{ poc.title }}">
+      {% endif %}
     {% endif %}
 
     <form action="{% url 'toggle_like' poc.id %}" method="post">
@@ -156,7 +179,7 @@
 
       <form action="{% url 'add_comment' poc.id %}" method="post" class="comment-form">
         {% csrf_token %}
-        <textarea name="text" rows="2" placeholder="Add a comment..."></textarea>
+        <textarea name="text" rows="2" placeholder="Add a comment..." required></textarea>
         <button type="submit">Post</button>
       </form>
     </div>
@@ -164,9 +187,26 @@
   {% endfor %}
 
   <script>
+    // faqat 1 ta commentni ko‘rsatish
+    document.querySelectorAll('.comment-section').forEach(sec => {
+      const comments = sec.querySelectorAll('.comment');
+      comments.forEach((c, i) => {
+        if (i > 0) c.style.display = "none";
+      });
+    });
+
+    // Tugmani bosganda barcha commentlarni ko‘rsatish / yopish
     function toggleComments(id) {
       const section = document.getElementById(`comments-${id}`);
-      section.style.display = section.style.display === "block" ? "none" : "block";
+      const comments = section.querySelectorAll('.comment');
+      const isExpanded = section.classList.toggle('expanded');
+
+      comments.forEach((c, i) => {
+        if (!isExpanded && i > 0) c.style.display = "none";
+        else c.style.display = "block";
+      });
+
+      section.style.display = isExpanded ? "block" : "none";
     }
   </script>
 </body>
