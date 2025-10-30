@@ -52,16 +52,25 @@ class Home(ListView):
 
        
        
-def toggle_like(request, pk):
-        poc = get_object_or_404(Poc, pk=pk)
+#def toggle_like(request, pk):
+#        poc = get_object_or_404(Poc, pk=pk)
+#
+#       if request.user in poc.like.all():
+#             poc.like.remove(request.user)  # Unlike
+#       else:
+#             poc.like.add(request.user)     # Like#
+#
+#       return redirect('home')
 
-        if request.user in poc.like.all():
-              poc.like.remove(request.user)  # Unlike
-        else:
-              poc.like.add(request.user)     # Like
+def toggle_like(request,pk):
+     poc = get_object_or_404(Poc,pk=pk)
 
-        return redirect('home')
-       
+     if request.user in poc.like.all():
+          poc.like.remove(request.user)
+     else:
+          poc.like.add(request.user)
+
+     return redirect('home')
       
 class AddPoc(CreateView):
        model=Poc
