@@ -3,6 +3,7 @@ from django.views.generic import CreateView , ListView ,UpdateView ,DeleteView  
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.contrib import messages
+from django.contrib.auth.mixins import LoginRequiredMixin
 from . import forms
 from django.contrib.auth.views import LoginView , LogoutView
 from django.urls import reverse_lazy
@@ -38,7 +39,7 @@ class CreateProfile(CreateView):
          return super().form_valid(form)
 
         
-class Home(ListView):
+class Home(LoginRequiredMixin,ListView):
        model=Poc
        template_name='home.html'
        context_object_name='pocs'
@@ -72,7 +73,7 @@ def toggle_like(request,pk):
 
      return redirect('home')
       
-class AddPoc(CreateView):
+class AddPoc(LoginRequiredMixin,CreateView):
        model=Poc
        fields=['title','content']
        template_name='addpoc.html'
@@ -82,7 +83,7 @@ class AddPoc(CreateView):
         form.instance.owner = self.request.user
         return super().form_valid(form)
        
-class MyPocs(ListView):
+class MyPocs(LoginRequiredMixin,ListView):
       model=Poc 
       template_name='crud.html'
       context_object_name='pocs'
@@ -90,7 +91,7 @@ class MyPocs(ListView):
       def get_queryset(self):
           return Poc.objects.filter(owner=self.request.user)
 
-class DeletePoc(DeleteView):
+class DeletePoc(LoginRequiredMixin,DeleteView):
       model=Poc
       template_name='crud.html'
       success_url=reverse_lazy('mypocs')
@@ -99,7 +100,7 @@ class DeletePoc(DeleteView):
             poc=self.get_object()
             return poc.owner == self.request.user
 
-class UpdatePoc(UpdateView):
+class UpdatePoc(LoginRequiredMixin,UpdateView):
       model=Poc
       template_name='crud.html'
       success_url=reverse_lazy('mypocs')
@@ -109,7 +110,7 @@ class UpdatePoc(UpdateView):
             poc=self.get_object()
             return poc.owner == self.request.user
       
-class MyProfile(DetailView):
+class MyProfile(LoginRequiredMixin,DetailView):
       model=Profile
       template_name='myprofile.html'
       context_object_name='profile'
@@ -118,7 +119,7 @@ class MyProfile(DetailView):
        obj, created = Profile.objects.get_or_create(user=self.request.user)
        return obj
 
-class EditProfile(UpdateView):
+class EditProfile(LoginRequiredMixin,UpdateView):
      model=Profile
      fields=['bio','picture']
      template_name='edit_profile.html'
@@ -132,3 +133,16 @@ class EditProfile(UpdateView):
         # Automatically get the current user's profile
         obj, created = Profile.objects.get_or_create(user=self.request.user)
         return obj
+     
+class CommentPoc(LoginRequiredMixin,CreateView):
+     model = Comment
+     fields=['text']
+
+     success_url = reverse_lazy('home')
+
+     def form_valid(self, form):
+         poc = get_object_or_404(Poc,pk=self.kwargs['pk'])
+         form.instance.poc = poc
+         form.instance.comment_owner = self.request.user
+         return super().form_valid(form)
+     

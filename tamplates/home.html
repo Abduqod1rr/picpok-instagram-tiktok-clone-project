@@ -15,7 +15,6 @@
       overflow-y: scroll;
     }
 
-    /* ==== NAVBAR ==== */
     nav {
       position: fixed;
       top: 0;
@@ -28,32 +27,17 @@
       z-index: 10;
       backdrop-filter: blur(8px);
     }
-    .logo { font-weight: bold; font-size: 1.4rem; color: #ff375f; letter-spacing: 1px; }
-    .nav-links a {
-      color: #fff;
-      text-decoration: none;
-      margin-left: 20px;
-      font-size: 0.95rem;
-    }
+    .logo { font-weight: bold; font-size: 1.4rem; color: #ff375f; }
+    .nav-links a { color: #fff; text-decoration: none; margin-left: 20px; }
     .nav-links a:hover { color: #ff375f; }
 
-    /* ==== SEARCH BAR ==== */
-    .search-container {
-      margin-top: 80px;
-      text-align: center;
-      padding: 10px;
-    }
+    .search-container { margin-top: 80px; text-align: center; padding: 10px; }
     .search-container input {
-      width: 70%;
-      padding: 10px 15px;
-      border-radius: 25px;
-      border: none;
-      outline: none;
-      background: #222;
-      color: white;
+      width: 70%; padding: 10px 15px;
+      border-radius: 25px; border: none; outline: none;
+      background: #222; color: white;
     }
 
-    /* ==== POST FEED ==== */
     .post-card {
       scroll-snap-align: start;
       height: 100vh;
@@ -62,7 +46,7 @@
       justify-content: flex-end;
       position: relative;
     }
-    .post-card img {
+    .post-card img, .post-card video {
       position: absolute;
       top: 0; left: 0;
       width: 100%;
@@ -70,6 +54,7 @@
       object-fit: cover;
       z-index: 0;
     }
+
     .overlay {
       position: relative;
       z-index: 2;
@@ -79,50 +64,52 @@
     .caption { font-size: 1.4rem; font-weight: 600; margin: 0; }
     .author { font-size: 1rem; opacity: 0.8; margin: 0; }
 
-    /* ==== LIKE BUTTON ==== */
     .like-btn {
       position: absolute;
       top: 20px;
-      right: 20px;
-      background: rgba(255, 55, 95, 0.85);
+      right: 25px;
+      background: rgba(0,0,0,0.6);
+      color: #fff;
       border: none;
-      border-radius: 50%;
-      width: 48px;
-      height: 48px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      border-radius: 20px;
+      padding: 6px 12px;
       cursor: pointer;
+      font-weight: 600;
+      transition: 0.2s ease;
       z-index: 3;
-      transition: 0.3s ease;
     }
-    .like-btn:hover {
-      transform: scale(1.1);
-      background: #ff375f;
+    .like-btn:hover { background: #ff375f; }
+
+    /* Comments */
+    .comment-section { display: none; background: rgba(0,0,0,0.6); padding: 15px; margin: 0 25px 30px; border-radius: 15px; }
+    .comment { font-size: 0.95rem; margin: 8px 0; }
+    .comment strong { color: #ff375f; }
+    .comment-form textarea {
+      width: 100%; padding: 8px; border-radius: 10px;
+      border: none; background: #222; color: white;
     }
-    .like-btn {
-  position: absolute; /* 🔥 bu muhim */
-  top: 20px;
-  right: 25px;
-  background: rgba(0,0,0,0.6);
-  color: #fff;
-  border: none;
-  border-radius: 20px;
-  padding: 6px 12px;
-  cursor: pointer;
-  font-weight: 600;
-  transition: 0.2s ease;
-  z-index: 3; /* 🔥 rasm/video ustida tursin */
-}
-
-.like-btn:hover {
-  background: #ff375f;
-}
-
+    .comment-form button {
+      margin-top: 8px; padding: 6px 12px; border: none; border-radius: 10px;
+      background: #ff375f; color: white; cursor: pointer; font-weight: 600;
+    }
+    .comment-form button:hover { background: #ff5775; }
+    .show-comments-btn {
+      position: relative;
+      z-index: 3;
+      margin: 10px 25px;
+      background: rgba(0,0,0,0.6);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      padding: 6px 12px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: 0.2s ease;
+    }
+    .show-comments-btn:hover { background: #ff375f; }
   </style>
 </head>
 <body>
-  
   <nav>
     <div class="logo">picpok</div>
     <div class="nav-links">
@@ -143,23 +130,44 @@
   {% for poc in pocs %}
   <div class="post-card">
     {% if ".mp4" in poc.content.url %}
-      <video src="{{ poc.content.url }}" autoplay muted  playsinline></video>
+      <video src="{{ poc.content.url }}" autoplay muted playsinline loop></video>
     {% else %}
       <img src="{{ poc.content.url }}" alt="{{ poc.title }}">
     {% endif %}
 
     <form action="{% url 'toggle_like' poc.id %}" method="post">
       {% csrf_token %}
-      <button type="submit" class="like-btn">
-        {{ poc.likes.count }}
-      </button>
+      <button type="submit" class="like-btn">{{ poc.likes.count }}</button>
     </form>
 
     <div class="overlay">
       <p class="caption">{{ poc.title }}</p>
       <p class="author">@{{ poc.owner }}</p>
     </div>
+
+    <button class="show-comments-btn" onclick="toggleComments({{ poc.id }})">💬 Comments</button>
+
+    <div class="comment-section" id="comments-{{ poc.id }}">
+      {% for c in poc.comment_set.all %}
+        <div class="comment"><strong>@{{ c.comment_owner.username }}</strong>: {{ c.text }}</div>
+      {% empty %}
+        <p>No comments yet...</p>
+      {% endfor %}
+
+      <form action="{% url 'add_comment' poc.id %}" method="post" class="comment-form">
+        {% csrf_token %}
+        <textarea name="text" rows="2" placeholder="Add a comment..."></textarea>
+        <button type="submit">Post</button>
+      </form>
+    </div>
   </div>
-{% endfor %}
+  {% endfor %}
+
+  <script>
+    function toggleComments(id) {
+      const section = document.getElementById(`comments-${id}`);
+      section.style.display = section.style.display === "block" ? "none" : "block";
+    }
+  </script>
 </body>
 </html>
