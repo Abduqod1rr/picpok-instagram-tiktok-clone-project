@@ -47,5 +47,5 @@ cd picpok
 **Abduqodir** — Creator of **PicPok**  
 Driven by focus, precision, and purpose.  
 Blending creativity with code, and turning ideas into experiences.
-maybe  it's speaking
+maybe  it's overspeaking
 
