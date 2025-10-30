@@ -39,3 +39,12 @@ If TikTok and Instagram had a darker, more authentic sibling — this would be i
 ```bash
 git clone https://github.com/yourusername/picpok.git
 cd picpok
+
+
+## 🧑‍💻 Author
+
+**Abduqodir** — Creator of **PicPok**  
+Driven by focus, precision, and purpose.  
+Blending creativity with code, and turning ideas into experiences.
+maybe  it's speaking
+
