@@ -40,7 +40,8 @@ If TikTok and Instagram had a darker, more authentic sibling — this would be i
 git clone https://github.com/yourusername/picpok.git
 cd picpok
 
----
+```
+
 ### 🧑‍💻 Author
 
 **Abduqodir** — Creator of **PicPok**  
