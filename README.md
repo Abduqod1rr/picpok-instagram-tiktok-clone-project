@@ -41,7 +41,7 @@ git clone https://github.com/yourusername/picpok.git
 cd picpok
 
 
-## 🧑‍💻 Author
+### 🧑‍💻 Author
 
 **Abduqodir** — Creator of **PicPok**  
 Driven by focus, precision, and purpose.  
