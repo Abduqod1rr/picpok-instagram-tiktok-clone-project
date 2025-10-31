@@ -20,7 +20,8 @@ class UserLogin(LoginView):
         success_url=reverse_lazy('createprofile')
 
 class userlogout(LogoutView):
-       success_url=reverse_lazy('login')
+        success_url=reverse_lazy('login')
+
 
 class CreateProfile(CreateView):
         model=Profile

@@ -160,7 +160,7 @@
 
     <form action="{% url 'toggle_like' poc.id %}" method="post">
       {% csrf_token %}
-      <button type="submit" class="like-btn">{{ poc.likes.count }}</button>
+      <button type="submit" class="like-btn">{{ poc.like.count }}</button>
     </form>
 
     <div class="overlay">
